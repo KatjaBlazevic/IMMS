@@ -418,6 +418,11 @@
 </div>
 
 <script>
+// Bloker ghost klika na mobitelu
+let _lastTouch=0;
+document.addEventListener('touchend',()=>{_lastTouch=Date.now();},{passive:true});
+function isFakeClick(e){return Date.now()-_lastTouch<350;}
+
 // Globalno stanje aplikacije
 const S={level:'easy',timer:'none',tiInt:null,tiSec:0,tiMax:30,cb:null,gid:0};
 
@@ -665,6 +670,7 @@ function g1Hint(){
   hl.style.animation='none';void hl.offsetWidth;hl.style.animation='letterGlow .7s ease';
 }
 function g1Ans(chosen,correct,e,btn){
+  if(isFakeClick(e))return;
   stopTi();const ok=chosen===correct;
   document.querySelectorAll('#g1-ltrs .lbtn').forEach(b=>{
     b.onclick=null;
@@ -791,8 +797,10 @@ function g3Spawn(){
   el.className='fshape';
   el.style.cssText='left:'+x+'px;top:-'+size+'px;width:'+size+'px;height:'+size+'px;'+color.style+';box-shadow:0 4px 12px rgba(0,0,0,.12);';
   el.style.borderRadius=Math.random()<0.5?'50%':'14px';
-  el.onclick=(function(c,elem){return function(){
-    if(!g3run)return;
+  let handled=false;
+  function g3Hit(c,elem){
+    if(handled||!g3run)return;
+    handled=true;
     elem.style.opacity='0';elem.style.pointerEvents='none';
     setTimeout(()=>{try{elem.remove();}catch(e){}},150);
     if(c.isRed){
@@ -804,7 +812,9 @@ function g3Spawn(){
       g3m++;document.getElementById('g3-m').textContent=g3m;
       sndNo();
     }
-  };})(color,el);
+  }
+  el.addEventListener('touchstart',function(ev){ev.preventDefault();g3Hit(color,el);},{passive:false});
+  el.addEventListener('click',function(){g3Hit(color,el);});
   arena.appendChild(el);
   const fallDur=3200+Math.random()*800;
   const fallStart=performance.now();
@@ -814,7 +824,7 @@ function g3Spawn(){
     const p=(ts-fallStart)/fallDur;
     if(p>=1){
       try{el.remove();}catch(e){}
-      if(color.isRed&&g3run){g3m++;document.getElementById('g3-m').textContent=g3m;sndNo();}
+      if(color.isRed&&g3run&&!handled){g3m++;document.getElementById('g3-m').textContent=g3m;sndNo();}
       return;
     }
     el.style.top=(-size+(ah+size)*p)+'px';
@@ -1011,6 +1021,7 @@ function g5Round(){
   });
 }
 function g5Click(item,card,e){
+  if(isFakeClick(e))return;
   if(card.classList.contains('disabled'))return;
   card.classList.add('disabled');card.onclick=null;
   if(item.isA){
