@@ -418,11 +418,6 @@
 </div>
 
 <script>
-// Bloker ghost klika na mobitelu
-let _lastTouch=0;
-document.addEventListener('touchend',()=>{_lastTouch=Date.now();},{passive:true});
-function isFakeClick(e){return Date.now()-_lastTouch<350;}
-
 // Globalno stanje aplikacije
 const S={level:'easy',timer:'none',tiInt:null,tiSec:0,tiMax:30,cb:null,gid:0};
 
@@ -661,7 +656,12 @@ function g1Draw(){
   for(let i=fl;i<q.w.length;i++){const s=document.createElement('span');s.className='wl';s.textContent=q.w[i];wd.appendChild(s);}
   const lts=shuf([q.l,...q.x]);
   const c=document.getElementById('g1-ltrs');c.innerHTML='';
-  lts.forEach(l=>{const b=document.createElement('button');b.className='lbtn';b.textContent=l;b.onclick=(e)=>g1Ans(l,q.l,e,b);c.appendChild(b);});
+  lts.forEach(l=>{
+    const b=document.createElement('button');b.className='lbtn';b.textContent=l;
+    b.addEventListener('touchstart',function(e){e.preventDefault();b._touched=true;g1Ans(l,q.l,e,b);},{passive:false});
+    b.addEventListener('click',function(e){if(b._touched){b._touched=false;return;}g1Ans(l,q.l,e,b);});
+    c.appendChild(b);
+  });
   mkDots('g1-prog',G1N,g1i);
 }
 function g1Hint(){
@@ -670,7 +670,6 @@ function g1Hint(){
   hl.style.animation='none';void hl.offsetWidth;hl.style.animation='letterGlow .7s ease';
 }
 function g1Ans(chosen,correct,e,btn){
-  if(isFakeClick(e))return;
   stopTi();const ok=chosen===correct;
   document.querySelectorAll('#g1-ltrs .lbtn').forEach(b=>{
     b.onclick=null;
@@ -1017,11 +1016,12 @@ function g5Round(){
   all.forEach(item=>{
     const card=document.createElement('div');card.className='item-card';
     card.innerHTML=mkSvg(item.id)+`<div class="item-lbl">${item.lbl}</div>`;
-    card.onclick=(e)=>g5Click(item,card,e);grid.appendChild(card);
+    card.addEventListener('touchstart',function(e){e.preventDefault();card._touched=true;g5Click(item,card,e);},{passive:false});
+    card.addEventListener('click',function(e){if(card._touched){card._touched=false;return;}g5Click(item,card,e);});
+    grid.appendChild(card);
   });
 }
 function g5Click(item,card,e){
-  if(isFakeClick(e))return;
   if(card.classList.contains('disabled'))return;
   card.classList.add('disabled');card.onclick=null;
   if(item.isA){
