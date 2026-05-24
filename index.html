@@ -15,19 +15,19 @@
   }
   *{box-sizing:border-box;margin:0;padding:0;}
 
-  /*ANIMIRANA POZADINA*/
+  /* ANIMIRANA POZADINA */
   body{font-family:'Atkinson Hyperlegible',Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;overflow-y:scroll;position:relative;}
   #bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;transition:opacity .5s;}
   #bg-canvas.paused{opacity:0.15;}
   .screen{position:relative;z-index:1;}
 
-  /*KONTROLA VELIČINE FONTA*/
+  /* KONTROLA VELIČINE FONTA */
   html.fs-sm{font-size:13px;}
   html.fs-md{font-size:16px;}
   html.fs-lg{font-size:19px;}
   html.fs-xl{font-size:23px;}
 
-  /*TRAKA ZA PRISTUPAČNOST NA POČETNOM ZASLONU*/
+  /* TRAKA ZA PRISTUPAČNOST NA POČETNOM ZASLONU */
   .access-bar{display:flex;flex-direction:column;align-items:center;gap:8px;background:rgba(255,255,255,0.85);border-radius:var(--rs);padding:12px 16px;margin-bottom:18px;backdrop-filter:blur(6px);border:1.5px solid var(--pl);}
   .access-row{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;}
   .access-label{font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);min-width:55px;}
@@ -170,7 +170,7 @@
   .drop-zone.matched-no{background:#FFE8E5;border-color:var(--red);animation:shake .4s;}
   .drop-zone svg{width:44px;height:44px;}
 
-  /* Igra 5 — Klikni sve životinje */
+  /* Igra 5 — Klikni sve životinje (mreža slika) */
   .animals-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0;}
   .item-card{background:#fff;border:2.5px solid var(--pl);border-radius:14px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:all .15px;}
   .item-card svg{width:52px;height:52px;display:block;}
@@ -181,7 +181,7 @@
   .item-card.clicked-no{background:#FFE8E5;border-color:var(--red);animation:shake .4s;}
   .item-card.disabled{cursor:default;}
 
-  /*LEBDEĆA PORUKA POVRATNE INFORMACIJE*/
+  /*  LEBDEĆA PORUKA POVRATNE INFORMACIJE  */
   .fb-toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(1);z-index:9999;
     display:flex;align-items:center;gap:12px;padding:18px 28px;border-radius:20px;
     font-size:1.5rem;font-weight:700;font-family:'Atkinson Hyperlegible',Arial,sans-serif;
@@ -223,10 +223,10 @@
 
 <canvas id="bg-canvas"></canvas>
 
-<!-- IMAGE LIBRARY (emoji) -->
+<!--  IMAGE LIBRARY (emoji) ─ -->
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none"></svg>
 
-<!-- SCREENS -->
+<!--  SCREENS  -->
 
 <!-- START -->
 <div id="s-start" class="screen active">
@@ -234,7 +234,7 @@
     <div class="logo"><div class="logo-dot"></div>Vista ADHD</div>
   </div>
   <div class="card">
-   <!-- ── Accessibility bar ── -->
+   <!--  Accessibility bar  -->
 <div class="access-bar">
 
   <div class="access-row">
@@ -293,7 +293,7 @@
   </div>
 </div>
 
-<!-- AKTIVNOSTI -->
+<!-- ACTIVITIES -->
 <div id="s-acts" class="screen">
   <div class="hdr">
     <div class="logo"><div class="logo-dot"></div>Vista ADHD</div>
@@ -312,7 +312,7 @@
   </div>
 </div>
 
-<!-- IGRA 1 -->
+<!-- GAME 1 -->
 <div id="s-g1" class="screen">
   <div id="g1-tdis" class="ti-dis" style="display:none"></div>
   <div class="ti-bar-wrap" id="g1-bw" style="display:none"><div class="ti-bar" id="g1-b"></div></div>
@@ -332,7 +332,7 @@
   </div>
 </div>
 
-<!-- IGRA 2 -->
+<!-- GAME 2 -->
 <div id="s-g2" class="screen">
   <div id="g2-tdis" class="ti-dis" style="display:none"></div>
   <div class="ti-bar-wrap" id="g2-bw" style="display:none"><div class="ti-bar" id="g2-b"></div></div>
@@ -348,19 +348,22 @@
   </div>
 </div>
 
-<!-- IGRA 3 — Klikni samo crvene (padajući oblici) -->
+<!-- GAME 3 — Klikni samo crvene (padajući oblici) -->
 <div id="s-g3" class="screen">
   <div class="card">
     <div class="ghdr"><button class="back-btn" onclick="goActs()">← Natrag</button><span class="gbadge">Igra 3</span></div>
     <p class="instr">Klikni samo <strong style="color:var(--red)">crvene</strong> oblike! Ostale ignoriraj! 🔴</p>
-    <div class="rg-tbar"><div class="rg-tfill" id="g3-tfill"></div></div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="rg-tbar" style="flex:1;margin:0"><div class="rg-tfill" id="g3-tfill"></div></div>
+      <div id="g3-secs" style="font-size:.9rem;font-weight:700;color:var(--purple);min-width:32px;text-align:right;">60s</div>
+    </div>
     <div class="fall-arena" id="g3-arena"></div>
-    <div class="rg-info" id="g3-info">Pogodaka: <b id="g3-h">0</b> &nbsp;|&nbsp; Promašaja: <b id="g3-m">0</b></div>
+    <div class="rg-info" id="g3-info">🔴 Pogodaka: <b id="g3-h">0</b> &nbsp;|&nbsp; ❌ Promašaja: <b id="g3-m">0</b></div>
     <div id="g3-sw" style="margin-top:10px;"><button class="btn btn-primary" onclick="g3Start()">▶ Kreni!</button></div>
   </div>
 </div>
 
-<!-- IGRA 4 — SVG drag & drop -->
+<!-- GAME 4 — SVG drag & drop -->
 <div id="s-g4" class="screen">
   <div id="g4-tdis" class="ti-dis" style="display:none"></div>
   <div class="ti-bar-wrap" id="g4-bw" style="display:none"><div class="ti-bar" id="g4-b"></div></div>
@@ -377,7 +380,7 @@
   </div>
 </div>
 
-<!-- IGRA 5 — SVG animal grid -->
+<!-- GAME 5 — SVG animal grid -->
 <div id="s-g5" class="screen">
   <div id="g5-tdis" class="ti-dis" style="display:none"></div>
   <div class="ti-bar-wrap" id="g5-bw" style="display:none"><div class="ti-bar" id="g5-b"></div></div>
@@ -391,7 +394,7 @@
   </div>
 </div>
 
-<!-- POVRATNE INFORMACIJE -->
+<!-- FEEDBACK -->
 <div id="s-fb" class="screen">
   <div id="fb-box" class="fb-ok">
     <div class="fb-ico" id="fb-ico">✅</div>
@@ -403,7 +406,7 @@
   </div>
 </div>
 
-<!-- ZAVRŠNI EKRAJ -->
+<!-- FINAL -->
 <div id="s-fin" class="screen">
   <div class="card" style="text-align:center">
     <div class="fin-trophy" id="fin-t">🏆</div>
@@ -415,15 +418,13 @@
 </div>
 
 <script>
-
+// Globalno stanje aplikacije
 const S={level:'easy',timer:'none',tiInt:null,tiSec:0,tiMax:30,cb:null,gid:0};
 
-let soundOn = true; // globalni prekidač zvuka
-let actx=null;      // dijeljeni AudioContext (kreira se jednom, pri prvom pozivu)
-
-// Vraća postojeći AudioContext ili kreira novi ako još ne postoji
+// Zvuk
+let soundOn=true;
+let actx=null;
 function ac(){if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();return actx;}
-
 function beep(hz,dur,type,vol,delay){
   try{
     const o=ac().createOscillator(),g=ac().createGain();
@@ -431,192 +432,174 @@ function beep(hz,dur,type,vol,delay){
     o.type=type||'sine';o.frequency.value=hz;
     const t=ac().currentTime+(delay||0);
     g.gain.setValueAtTime(0,t);
-    g.gain.linearRampToValueAtTime(vol||.15,t+.02); // naglo povećanje glasnoće
-    g.gain.exponentialRampToValueAtTime(.001,t+dur); // postepeno utišavanje
+    g.gain.linearRampToValueAtTime(vol||.15,t+.02);
+    g.gain.exponentialRampToValueAtTime(.001,t+dur);
     o.start(t);o.stop(t+dur+.05);
   }catch(e){}
 }
-// Zvuk za točan odgovor
 function sndOk(){if(soundOn){beep(600,.1,'sine',.15);beep(820,.14,'sine',.15,.12);}}
-// Zvuk za netočan odgovor
 function sndNo(){if(soundOn){beep(240,.22,'sawtooth',.12);}}
 
-// MAPA EMOJI SLIKA
+// Mapa emoji slika za igre
 const EMOJI_MAP = {
   'svg-pas':'🐶','svg-macka':'🐱','svg-zec':'🐰','svg-slon':'🐘',
   'svg-zirafa':'🦒','svg-lav':'🦁','svg-medvjed':'🐻','svg-riba':'🐟',
   'svg-ptica':'🐦','svg-zaba':'🐸','svg-auto':'🚗','svg-jabuka':'🍎',
   'svg-kuca':'🏠','svg-lopta':'⚽','svg-torta':'🎂','svg-olovka':'✏️',
   'svg-sunce':'☀️','svg-knjiga':'📚',
+  'svg-konj':'🐴','svg-krava':'🐄','svg-ovca':'🐑','svg-svinja':'🐷',
+  'svg-pile':'🐥','svg-majmun':'🐒','svg-pingvin':'🐧','svg-hobotnica':'🐙',
+  'svg-stolica':'🪑','svg-lampa':'💡','svg-cipela':'👟','svg-skateboard':'🛹',
+  'svg-kljuc':'🔑','svg-balon':'🎈','svg-sladoled':'🍦','svg-bicikl':'🚲',
 };
 function mkSvg(id){
   return `<span class="emoji-img">${EMOJI_MAP[id]||'❓'}</span>`;
 }
 
-// ANIMACIJA ZVJEZDICE
+// Zvjezdica koja lebdi prema gore pri točnom odgovoru
 function floatStar(x,y){
   const el=document.createElement('div');
-  el.className='fstar';
-  el.textContent='⭐';
-  el.style.left=(x-16)+'px';
-  el.style.top=(y-16)+'px';
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(),1000); // ukloni element nakon animacije
+  el.className='fstar';el.textContent='⭐';
+  el.style.left=(x-16)+'px';el.style.top=(y-16)+'px';
+  document.body.appendChild(el);setTimeout(()=>el.remove(),1000);
 }
 
-// UPRAVLJANJE EKRANIMA
-function show(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-// Resetira trenutnu igru i vraća na izbornik igara
+// Prikaz ekrana
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
 function goActs(){resetGame();show('s-acts');}
 
-// ODABIR RAZINE I TIMERA
+// Odabir razine — odbrojavanje i traka dostupni samo na težoj razini
 function selLv(lv){
   S.level=lv;
   document.getElementById('btn-easy').classList.toggle('sel',lv==='easy');
   document.getElementById('btn-hard').classList.toggle('sel',lv==='hard');
   const d=document.getElementById('t-down'),f=document.getElementById('t-fade');
   if(lv==='easy'){
-    // onemogući gumbe za odbrojavanje i traku na lakoj razini
     d.className='btn btn-dis';f.className='btn btn-dis';
     d.classList.remove('sel');f.classList.remove('sel');
-    if(S.timer==='down'||S.timer==='fade')selTi('none'); // poništi nedostupni odabir
+    if(S.timer==='down'||S.timer==='fade')selTi('none');
   }else{
-    // omogući sve opcije na težoj razini
     d.className='btn btn-outline';f.className='btn btn-outline';
     if(S.timer==='down')d.classList.add('sel');
     if(S.timer==='fade')f.classList.add('sel');
   }
 }
-// Odabire vrstu timera i označava aktivni gumb u sučelju
 function selTi(t){
-  if((t==='down'||t==='fade')&&S.level==='easy')return; // blokira na lakoj razini
+  if((t==='down'||t==='fade')&&S.level==='easy')return;
   S.timer=t;
-  // skini oznaku sa svih timer gumba
   ['none','up','down','fade'].forEach(id=>{
-    const el=document.getElementById('t-'+id);
-    if(!el)return;
-    el.classList.remove('sel');
+    const el=document.getElementById('t-'+id);if(!el)return;el.classList.remove('sel');
   });
-  // označi novoabrani gumb (samo ako nije onemogućen)
   const sel=document.getElementById('t-'+t);
   if(sel&&!sel.classList.contains('btn-dis'))sel.classList.add('sel');
 }
 
-// TIMER SUSTAV
+// Timer
 function stopTi(){if(S.tiInt){clearInterval(S.tiInt);S.tiInt=null;}}
-
 function resetGame(){stopTi();S.cb=null;S.gid++;}
-
 function startTi(dId,bwId,bId,fwId,fId,onExp){
   stopTi();
-  // sakrij sve timer elemente — prikazat ćemo samo one koji trebaju
-  [dId,bwId,fwId].forEach(id=>{
-    if(id){const el=document.getElementById(id);if(el)el.style.display='none';}
-  });
-  if(S.timer==='none')return; // bez timera — ništa ne prikazujemo
-  const myGid=S.gid; // zabilježi ID sesije u trenutku pokretanja timera
-  // safe() osigurava da se callback pozove samo ako je sesija još ista
+  [dId,bwId,fwId].forEach(id=>{if(id){const el=document.getElementById(id);if(el)el.style.display='none';}});
+  if(S.timer==='none')return;
+  const myGid=S.gid;
   const safe=(fn)=>()=>{if(S.gid===myGid&&fn)fn();};
   const dEl=document.getElementById(dId);
   const bw=bwId&&document.getElementById(bwId),bEl=bId&&document.getElementById(bId);
   const fw=fwId&&document.getElementById(fwId),fEl=fId&&document.getElementById(fId);
-  let iv; // lokalna referenca na interval (sprema se u S.tiInt tek na kraju)
+  let iv;
   if(S.timer==='up'){
-    // mjerač vremena: broji sekunde naviše (0:00, 0:01, 0:02...)
     S.tiSec=0;dEl.style.display='block';dEl.textContent='0:00';
     iv=setInterval(()=>{
-      if(S.gid!==myGid){clearInterval(iv);return;} // zaustavi ako je sesija gotova
-      S.tiSec++;
-      const m=Math.floor(S.tiSec/60),s=S.tiSec%60;
+      if(S.gid!==myGid){clearInterval(iv);return;}
+      S.tiSec++;const m=Math.floor(S.tiSec/60),s=S.tiSec%60;
       dEl.textContent=m+':'+String(s).padStart(2,'0');
     },1000);
-  } else if(S.timer==='down'){
-    // odbrojavanje: broji naniže, traka se prazni proporcionalno
+  }else if(S.timer==='down'){
     S.tiSec=S.tiMax;dEl.style.display='block';if(bw)bw.style.display='block';
     dEl.textContent=S.tiMax+'s';if(bEl)bEl.style.width='100%';
     iv=setInterval(()=>{
       if(S.gid!==myGid){clearInterval(iv);return;}
       S.tiSec--;dEl.textContent=S.tiSec+'s';
       if(bEl)bEl.style.width=(Math.max(0,S.tiSec)/S.tiMax*100)+'%';
-      if(S.tiSec<=0){stopTi();safe(onExp)();} // pozovi callback kad dođe do nule
+      if(S.tiSec<=0){stopTi();safe(onExp)();}
     },1000);
-  } else if(S.timer==='fade'){
-    // traka koja nestaje: smanjuje se i širina i prozirnost
+  }else if(S.timer==='fade'){
     S.tiSec=S.tiMax;if(fw)fw.style.display='block';
     if(fEl){fEl.style.width='100%';fEl.style.opacity='1';}
     iv=setInterval(()=>{
       if(S.gid!==myGid){clearInterval(iv);return;}
-      S.tiSec--;
-      const r=Math.max(0,S.tiSec)/S.tiMax; // omjer preostalog vremena (0–1)
+      S.tiSec--;const r=Math.max(0,S.tiSec)/S.tiMax;
       if(fEl){fEl.style.width=(r*100)+'%';fEl.style.opacity=r;}
       if(S.tiSec<=0){stopTi();safe(onExp)();}
     },1000);
   }
-  S.tiInt=iv; // spremi referencu kako bi stopTi() mogao ugasiti interval
+  S.tiInt=iv;
 }
 
-// Crta niz točkica koje prikazuju napredak kroz pitanja.
+// Točkice za napredak
 function mkDots(id,total,cur){
-  const el=document.getElementById(id);if(!el)return;
-  el.innerHTML='';
-  for(let i=0;i<total;i++){
-    const d=document.createElement('div');
-    d.className='pd'+(i<cur?' done':i===cur?' cur':'');
-    el.appendChild(d);
-  }
+  const el=document.getElementById(id);if(!el)return;el.innerHTML='';
+  for(let i=0;i<total;i++){const d=document.createElement('div');d.className='pd'+(i<cur?' done':i===cur?' cur':'');el.appendChild(d);}
 }
 
-// FEEDBACK 
-
-let _toastTo=null; // referenca na aktivni timeout toasta
+// Poruka nakon svakog odgovora
+let _toastTo=null;
 function showFB(ok,cb){
   S.cb=cb||null;S.cbGid=S.gid;
-  // ukloni prethodni toast ako postoji
   const old=document.querySelector('.fb-toast');if(old)old.remove();
   if(_toastTo){clearTimeout(_toastTo);_toastTo=null;}
-  // poruke za točan i netočan odgovor
   const om=['Sjajno! 🎉','Super! ⭐','Odlično! 🌟','Wow! 🏆'];
   const nm=['Pokušaj ponovo! 💪','Nema veze! 😊','Idemo dalje! 🌈'];
   const msg=ok?om[~~(Math.random()*om.length)]:nm[~~(Math.random()*nm.length)];
-  // kreiraj i dodaj toast element na stranicu
   const toast=document.createElement('div');
   toast.className='fb-toast '+(ok?'fb-toast-ok':'fb-toast-no');
   toast.innerHTML=`<span class="fb-toast-ico">${ok?'✅':'❌'}</span><span>${msg}</span>`;
   document.body.appendChild(toast);
-  // nakon kratke pauze pokreni izlaznu animaciju pa pozovi nastavak
   const delay=ok?900:1100;
-  _toastTo=setTimeout(()=>{
-    toast.classList.add('fb-toast-out');
-    setTimeout(()=>{toast.remove();fbCont();},300);
-  },delay);
+  _toastTo=setTimeout(()=>{toast.classList.add('fb-toast-out');setTimeout(()=>{toast.remove();fbCont();},300);},delay);
 }
-// Poziva callback za nastavak igre, ili vraća na izbornik ako ga nema
 function fbCont(){if(S.cb&&S.cbGid===S.gid){const f=S.cb;S.cb=null;f();}else if(!S.cb){goActs();}}
 
-// ZAVRŠNI EKRAN
+// Završni ekran
 function showFinal(correct,total){
   stopTi();
-  const p=total?correct/total:0; // postotak točnih odgovora (0–1)
+  const p=total?correct/total:0;
   let trophy,msg,stars;
-  if(p>=.8){trophy='🏆';msg='Odlično! Pravi šampion! 🎊';stars='⭐⭐⭐⭐⭐';}
-  else if(p>=.5){trophy='🥈';msg='Dobro! Samo naprijed! 💪';stars='⭐⭐⭐';}
-  else{trophy='🎗';msg='Vježbaj i bit će još bolje! 😊';stars='⭐';}
+  if(p>=.8){trophy='🏆';msg='Odlično!';stars='⭐⭐⭐⭐⭐';}
+  else if(p>=.5){trophy='🥈';msg='Dobro!';stars='⭐⭐⭐';}
+  else{trophy='🌟';msg='Vježbaj dalje!';stars='⭐';}
   document.getElementById('fin-t').textContent=trophy;
   document.getElementById('fin-s').textContent=correct+' / '+total;
   document.getElementById('fin-stars').textContent=stars;
   document.getElementById('fin-m').textContent=msg;
   show('s-fin');
 }
-// Resetira igru i vraća na početni zaslon za odabir razine
+// Završni ekran za Igru 3 (prikazuje pogotke i promašaje)
+function showFinalG3(hits,misses){
+  stopTi();
+  let trophy,msg,stars;
+  const easy=S.level==='easy';
+  if(easy){
+    if(hits>=10){trophy='🏆';msg='Odlično!';stars='⭐⭐⭐⭐⭐';}
+    else if(hits>=6){trophy='🥈';msg='Dobro!';stars='⭐⭐⭐';}
+    else{trophy='🌟';msg='Vježbaj dalje!';stars='⭐';}
+  }else{
+    if(hits>=25){trophy='🏆';msg='Odlično!';stars='⭐⭐⭐⭐⭐';}
+    else if(hits>=15){trophy='🥈';msg='Dobro!';stars='⭐⭐⭐';}
+    else{trophy='🌟';msg='Vježbaj dalje!';stars='⭐';}
+  }
+  document.getElementById('fin-t').textContent=trophy;
+  document.getElementById('fin-s').textContent='Pogodaka: '+hits+'  |  Promašaja: '+misses;
+  document.getElementById('fin-stars').textContent=stars;
+  document.getElementById('fin-m').textContent=msg;
+  show('s-fin');
+}
 function restart(){resetGame();show('s-start');}
-// Miješa niz nasumično — koristi Fisher-Yates algoritam
 function shuf(a){for(let i=a.length-1;i>0;i--){const j=~~(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-// Pokreće odabranu igru po rednom broju (1 = g1Init, 2 = g2Init, itd.)
 function startGame(n){resetGame();[g1Init,g2Init,g3Init,g4Init,g5Init][n-1]();}
 
+// IGRA 1: Pronađi početno slovo
+// Pitanja za lakšu razinu (česta slova)
 const G1E=[
   {w:'jabuka',e:'🍎',l:'J',x:['A','B']},{w:'brod',e:'⛵',l:'B',x:['R','D']},
   {w:'dinja',e:'🍈',l:'D',x:['I','N']},{w:'macka',e:'🐱',l:'M',x:['A','C']},
@@ -624,326 +607,296 @@ const G1E=[
   {w:'ruka',e:'✋',l:'R',x:['U','K']},{w:'slon',e:'🐘',l:'S',x:['L','O']},
   {w:'torta',e:'🎂',l:'T',x:['O','R']},{w:'voda',e:'💧',l:'V',x:['O','D']},
   {w:'zec',e:'🐰',l:'Z',x:['E','C']},{w:'auto',e:'🚗',l:'A',x:['U','T']},
+  {w:'kuća',e:'🏠',l:'K',x:['H','G']},{w:'lopta',e:'⚽',l:'L',x:['O','P']},
+  {w:'medo',e:'🐻',l:'M',x:['N','B']},{w:'novac',e:'💰',l:'N',x:['M','V']},
+  {w:'oganj',e:'🔥',l:'O',x:['A','G']},{w:'patka',e:'🦆',l:'P',x:['B','T']},
+  {w:'riba',e:'🐟',l:'R',x:['B','L']},{w:'sunce',e:'☀️',l:'S',x:['T','Z']},
+  {w:'trešnja',e:'🍒',l:'T',x:['K','S']},{w:'uho',e:'👂',l:'U',x:['A','O']},
+  {w:'vatra',e:'🔥',l:'V',x:['B','F']},{w:'zvijezda',e:'⭐',l:'Z',x:['S','V']},
+  {w:'banana',e:'🍌',l:'B',x:['D','P']},{w:'guska',e:'🪿',l:'G',x:['K','D']},
+  {w:'hobotnica',e:'🐙',l:'H',x:['O','K']},{w:'igla',e:'🪡',l:'I',x:['U','E']},
+  {w:'jaje',e:'🥚',l:'J',x:['I','G']},{w:'krastavac',e:'🥒',l:'K',x:['T','Z']},
 ];
+// Pitanja za težu razinu (složena slova: Š, Ž, Č, Ć, Nj, Lj, Dž)
 const G1H=[
   {w:'šešir',e:'🎩',l:'Š',x:['S','Ž']},{w:'žirafa',e:'🦒',l:'Ž',x:['G','Š']},
   {w:'čekić',e:'🔨',l:'Č',x:['C','Ć']},{w:'ćup',e:'🏺',l:'Ć',x:['C','Č']},
   {w:'riba',e:'🐟',l:'R',x:['B','I']},{w:'njuška',e:'🐽',l:'Nj',x:['N','Lj']},
   {w:'ljubav',e:'💖',l:'Lj',x:['L','Nj']},{w:'džungla',e:'🌴',l:'Dž',x:['D','Š']},
+  {w:'šuma',e:'🌲',l:'Š',x:['S','Z']},{w:'žaba',e:'🐸',l:'Ž',x:['Z','Š']},
+  {w:'čarapa',e:'🧦',l:'Č',x:['Ć','C']},{w:'ćilim',e:'🪆',l:'Ć',x:['Č','K']},
+  {w:'lješnjak',e:'🌰',l:'Lj',x:['L','Nj']},{w:'njiva',e:'🌾',l:'Nj',x:['N','Lj']},
+  {w:'džem',e:'🍓',l:'Dž',x:['D','Č']},{w:'šišmiš',e:'🦇',l:'Š',x:['S','Ž']},
+  {w:'žiroskop',e:'🌀',l:'Ž',x:['Z','Š']},{w:'čokolada',e:'🍫',l:'Č',x:['Š','C']},
+  {w:'ćevap',e:'🍢',l:'Ć',x:['C','Č']},{w:'ljestve',e:'🪜',l:'Lj',x:['L','J']},
 ];
-let g1Qs=[],g1i=0,g1ok=0; // lista pitanja, trenutni indeks, broj točnih
-const G1N=5;               // ukupan broj pitanja po igri
+let g1Qs=[],g1i=0,g1ok=0,g1seen=[];
+const G1N=5;
 
-// Inicijalizira igru: nasumično odabire 5 pitanja prema razini
 function g1Init(){
-  g1Qs=shuf([...(S.level==='easy'?G1E:G1H)]).slice(0,G1N);
+  const pool=S.level==='easy'?G1E:G1H;
+  if(g1seen.length>=pool.length)g1seen=[];
+  const avail=pool.filter(q=>!g1seen.includes(q.w));
+  g1Qs=shuf([...avail]).slice(0,G1N);
+  g1Qs.forEach(q=>g1seen.push(q.w));
   g1i=0;g1ok=0;
   document.getElementById('g1-hint').style.display='none';
   show('s-g1');g1Draw();
-  // pokreni timer; kad istekne, bilježi netočan odgovor i ide dalje
   startTi('g1-tdis','g1-bw','g1-b','g1-fw','g1-fb',()=>{sndNo();g1Adv(false);});
 }
-// Crta trenutno pitanje: sliku, naziv s istaknutim prvim slovom i gumbe za odabir
 function g1Draw(){
-  const q=g1Qs[g1i]; // dohvati trenutno pitanje
+  const q=g1Qs[g1i];
   document.getElementById('g1-img').textContent=q.e;
-  document.getElementById('g1-hl').textContent=q.l; // postavi hint slovo
+  document.getElementById('g1-hl').textContent=q.l;
   document.getElementById('g1-hint').style.display='none';
-  // prikaži naziv s prvim slovom istaknutim ljubičasto
   const wd=document.getElementById('g1-wd');wd.innerHTML='';
-  const fl=q.l.length; // duljina prvog slova (npr. 'Nj' = 2 znaka)
+  const fl=q.l.length;
   const s1=document.createElement('span');s1.className='wl first';
   s1.textContent=q.w.slice(0,fl).toUpperCase();wd.appendChild(s1);
-  for(let i=fl;i<q.w.length;i++){
-    const s=document.createElement('span');s.className='wl';s.textContent=q.w[i];wd.appendChild(s);
-  }
-  // pomiješaj točno slovo s krivim ponudama i prikaži gumbe
+  for(let i=fl;i<q.w.length;i++){const s=document.createElement('span');s.className='wl';s.textContent=q.w[i];wd.appendChild(s);}
   const lts=shuf([q.l,...q.x]);
   const c=document.getElementById('g1-ltrs');c.innerHTML='';
-  lts.forEach(l=>{
-    const b=document.createElement('button');b.className='lbtn';b.textContent=l;
-    b.onclick=(e)=>g1Ans(l,q.l,e,b);c.appendChild(b);
-  });
+  lts.forEach(l=>{const b=document.createElement('button');b.className='lbtn';b.textContent=l;b.onclick=(e)=>g1Ans(l,q.l,e,b);c.appendChild(b);});
   mkDots('g1-prog',G1N,g1i);
 }
-// Prikazuje hint: animira početno slovo i čini ga vidljivim
 function g1Hint(){
   const h=document.getElementById('g1-hint');h.style.display='flex';
   const hl=document.getElementById('g1-hl');
-  hl.style.animation='none';void hl.offsetWidth; // resetiraj animaciju
-  hl.style.animation='letterGlow .7s ease';
+  hl.style.animation='none';void hl.offsetWidth;hl.style.animation='letterGlow .7s ease';
 }
-// Provjerava odabrano slovo i označava točan/netočan odgovor
 function g1Ans(chosen,correct,e,btn){
-  stopTi();
-  const ok=chosen===correct;
-  // označi sve gumbe: točan zeleno, krivo odabrani crveno
+  stopTi();const ok=chosen===correct;
   document.querySelectorAll('#g1-ltrs .lbtn').forEach(b=>{
-    b.onclick=null; // onemogući daljnje klikove
+    b.onclick=null;
     if(b.textContent===correct)b.classList.add('correct');
     else if(b===btn&&!ok)b.classList.add('wrong');
   });
   if(ok){floatStar(e.clientX,e.clientY);sndOk();}else sndNo();
   g1Adv(ok);
 }
-// Napreduje na sljedeće pitanje ili završava igru
 function g1Adv(ok){
   if(ok)g1ok++;
   const myGid=S.gid;
   setTimeout(()=>{
-    if(S.gid!==myGid)return; // provjeri je li sesija još aktivna
+    if(S.gid!==myGid)return;
     g1i++;
-    if(g1i>=G1N){showFinal(g1ok,G1N);return;} // sva pitanja završena
-    showFB(ok,()=>{
-      show('s-g1');
-      document.getElementById('g1-hint').style.display='none';
-      g1Draw();
-      startTi('g1-tdis','g1-bw','g1-b','g1-fw','g1-fb',()=>{sndNo();g1Adv(false);});
-    });
+    if(g1i>=G1N){showFinal(g1ok,G1N);return;}
+    showFB(ok,()=>{show('s-g1');document.getElementById('g1-hint').style.display='none';g1Draw();startTi('g1-tdis','g1-bw','g1-b','g1-fw','g1-fb',()=>{sndNo();g1Adv(false);});});
   },ok?500:600);
 }
 
-const SHAPES=[{e:'⭐'},{e:'❤️'},{e:'🔵'},{e:'🟡'},{e:'🟢'},{e:'🔴'},{e:'🟦'},{e:'🟨'},{e:'🟩'},{e:'▲'},{e:'💎'},{e:'🌙'},{e:'🍀'},{e:'⚡'},{e:'🔶'},{e:'🔷'},{e:'🌸'},{e:'🎯'},{e:'🦋'},{e:'🍁'},{e:'🌊'},{e:'🏵️'}];
+//IGRA 2: Što je nestalo?
+const SHAPES=[{e:'⭐'},{e:'❤️'},{e:'🔵'},{e:'🟡'},{e:'🟢'},{e:'🔴'},{e:'🟦'},{e:'🟨'},{e:'🟩'},{e:'▲'},{e:'💎'},{e:'🌙'},{e:'🍀'},{e:'⚡'},{e:'🔶'},{e:'🔷'},{e:'🌸'},{e:'🎯'},{e:'🦋'},{e:'🍁'},{e:'🌊'},{e:'🏵️'},{e:'🐶'},{e:'🐱'},{e:'🐸'},{e:'🦊'},{e:'🐼'},{e:'🦄'},{e:'🐝'},{e:'🦀'},{e:'🌵'},{e:'🍄'},{e:'🎪'},{e:'🎠'},{e:'🚀'},{e:'🎸'},{e:'🏆'},{e:'🎭'},{e:'🌈'},{e:'🍕'},{e:'🎃'},{e:'🧲'}];
 let g2Seq=[],g2Miss=-1,g2i=0,g2ok=0,g2pto=null;
-const G2N=5; // broj rundi
+const G2N=5;
 
 function g2Init(){g2i=0;g2ok=0;show('s-g2');mkDots('g2-prog',G2N,0);g2Round();}
 function g2Round(){
-  if(g2pto){clearTimeout(g2pto);g2pto=null;} // poništi zaostali timeout
+  if(g2pto){clearTimeout(g2pto);g2pto=null;}
   document.getElementById('g2-qa').style.display='none';
-  const cnt=S.level==='easy'?4:5; // broj oblika prema razini
-  g2Seq=shuf([...SHAPES]).slice(0,cnt); // nasumično odaberi oblike
-  g2Miss=~~(Math.random()*cnt);         // nasumično odaberi koji će nestati
+  const cnt=S.level==='easy'?4:5;
+  g2Seq=shuf([...SHAPES]).slice(0,cnt);
+  g2Miss=~~(Math.random()*cnt);
   document.getElementById('g2-ph').textContent='👀 Zapamti niz!';
-  g2Draw(false); // prikaži sve oblike (bez praznine)
-  startTi('g2-tdis','g2-bw','g2-b',null,null,null);
-  mkDots('g2-prog',G2N,g2i);
-  // nakon određenog vremena sakrij jedan oblik i prikaži pitanje
+  g2Draw(false);startTi('g2-tdis','g2-bw','g2-b',null,null,null);mkDots('g2-prog',G2N,g2i);
   g2pto=setTimeout(()=>{
     const items=document.querySelectorAll('#g2-seq .sh');
-    if(items[g2Miss])items[g2Miss].classList.add('vanishing'); // animacija nestajanja
-    setTimeout(()=>{
-      document.getElementById('g2-ph').textContent='🤔 Koji oblik je nestao?';
-      g2Draw(true);  // prikaži niz s prazninom umjesto nestanolog oblika
-      g2ShowCh();    // prikaži ponuđene odgovore
-    },520);
+    if(items[g2Miss])items[g2Miss].classList.add('vanishing');
+    setTimeout(()=>{document.getElementById('g2-ph').textContent='🤔 Koji oblik je nestao?';g2Draw(true);g2ShowCh();},520);
   },S.level==='easy'?3000:2000);
 }
-// Crta niz oblika; ako je gap=true, na mjestu g2Miss stavlja upitnik
 function g2Draw(gap){
   const row=document.getElementById('g2-seq');row.innerHTML='';
-  g2Seq.forEach((sh,i)=>{
-    const d=document.createElement('div');
-    if(gap&&i===g2Miss){d.className='sh gap';d.textContent='?';}
-    else{d.className='sh anim';d.textContent=sh.e;d.style.animationDelay=(i*.07)+'s';}
-    row.appendChild(d);
-  });
+  g2Seq.forEach((sh,i)=>{const d=document.createElement('div');if(gap&&i===g2Miss){d.className='sh gap';d.textContent='?';}else{d.className='sh anim';d.textContent=sh.e;d.style.animationDelay=(i*.07)+'s';}row.appendChild(d);});
 }
-// Prikazuje 3 gumba za odabir: točan oblik + 2 nasumična distraktora
 function g2ShowCh(){
   const correct=g2Seq[g2Miss];
-  const dist=shuf(SHAPES.filter(s=>!g2Seq.find(x=>x.e===s.e))).slice(0,2); // 2 kriva
+  const dist=shuf(SHAPES.filter(s=>!g2Seq.find(x=>x.e===s.e))).slice(0,2);
   const opts=shuf([correct,...dist]);
   document.getElementById('g2-qa').style.display='block';
   const ch=document.getElementById('g2-ch');ch.innerHTML='';
-  opts.forEach(sh=>{
-    const b=document.createElement('button');b.className='ch';b.textContent=sh.e;
-    b.onclick=(e)=>g2Ans(sh,correct,e,b);ch.appendChild(b);
-  });
+  opts.forEach(sh=>{const b=document.createElement('button');b.className='ch';b.textContent=sh.e;b.onclick=(e)=>g2Ans(sh,correct,e,b);ch.appendChild(b);});
 }
-// Provjerava odgovor, označi točno/netočno i ide na sljedeću rundu
 function g2Ans(chosen,correct,e,btn){
   stopTi();if(g2pto){clearTimeout(g2pto);g2pto=null;}
   const ok=chosen.e===correct.e;
-  document.querySelectorAll('#g2-ch .ch').forEach(b=>{
-    b.onclick=null;
-    if(b.textContent===correct.e)b.classList.add('correct');
-    else if(b===btn&&!ok)b.classList.add('wrong');
-  });
-  // otkrij što je nestalo — zeleno ako točno, crveno ako krivo
+  document.querySelectorAll('#g2-ch .ch').forEach(b=>{b.onclick=null;if(b.textContent===correct.e)b.classList.add('correct');else if(b===btn&&!ok)b.classList.add('wrong');});
   const items=document.querySelectorAll('#g2-seq .sh');
   if(items[g2Miss]){items[g2Miss].className='sh '+(ok?'rev-ok':'rev-no');items[g2Miss].textContent=correct.e;}
   if(ok){floatStar(e.clientX,e.clientY);sndOk();g2ok++;}else sndNo();
-  const _g2gid=S.gid;
-  setTimeout(()=>{
-    if(S.gid!==_g2gid)return;
-    g2i++;
-    if(g2i>=G2N){showFinal(g2ok,G2N);return;}
-    showFB(ok,()=>{show('s-g2');mkDots('g2-prog',G2N,g2i);g2Round();});
-  },700);
+  const _g2gid=S.gid;setTimeout(()=>{if(S.gid!==_g2gid)return;g2i++;if(g2i>=G2N){showFinal(g2ok,G2N);return;}showFB(ok,()=>{show('s-g2');mkDots('g2-prog',G2N,g2i);g2Round();});},700);
 }
 
+//IGRA 3: Klikni samo crvene
 var g3iv=null,g3to=null,g3h=0,g3m=0,g3run=false,g3dur=0,g3start=0,g3gid=0;
-const G3_TARGET=5; // broj crvenih koje dijete treba skupiti za pobjedu
 
-// Vraća nasumičnu boju oblika — 35% šansa za crvenu, ostalo su distraktori
 function g3PickColor(){
-  const reds=[
-    {style:'background:#E74C3C',isRed:true}, // jedina nijansa crvene
+  const reds=[{style:'background:#E74C3C',isRed:true}];
+  const others=[
+    {style:'background:#7B9EFF',isRed:false},
+    {style:'background:#A87EFF',isRed:false},
+    {style:'background:#56CCF2',isRed:false},
+    {style:'background:#F7C948',isRed:false},
+    {style:'background:#4fdfb4',isRed:false},
+    {style:'background:#FFB347',isRed:false},
   ];
-  const others=[ // distraktori u raznim bojama
-    {style:'background:#7B9EFF',isRed:false}, // plava
-    {style:'background:#A87EFF',isRed:false}, // ljubičasta
-    {style:'background:#56CCF2',isRed:false}, // tirkizna
-    {style:'background:#F7C948',isRed:false}, // žuta
-    {style:'background:#4fdfb4',isRed:false}, // zelena
-    {style:'background:#FFB347',isRed:false}, // narančasta
-  ];
-  return Math.random()<0.35?reds[~~(Math.random()*reds.length)]:others[~~(Math.random()*others.length)];
+  return Math.random()<0.35?reds[0]:others[~~(Math.random()*others.length)];
 }
 
-// Resetira stanje igre i prikazuje "Kreni!" gumb (poziva se i kad se ide Natrag)
 function g3Init(){
-  g3run=false;             // označi igru kao neaktivnu
-  clearInterval(g3iv);g3iv=null; // zaustavi spawn interval
-  clearTimeout(g3to);g3to=null;  // zaustavi timeout kraja igre
+  g3run=false;
+  clearInterval(g3iv);g3iv=null;
+  clearTimeout(g3to);g3to=null;
   g3h=0;g3m=0;
   document.getElementById('g3-h').textContent=0;
   document.getElementById('g3-m').textContent=0;
-  document.getElementById('g3-arena').innerHTML=''; // ukloni sve oblike
-  document.getElementById('g3-tfill').style.width='100%'; // resetiraj traku
-  document.getElementById('g3-sw').style.display='block'; // prikaži Kreni! gumb
+  document.getElementById('g3-arena').innerHTML='';
+  document.getElementById('g3-tfill').style.width='100%';
+  document.getElementById('g3-secs').textContent='60s';
+  document.getElementById('g3-sw').style.display='block';
   show('s-g3');
 }
 
-// Pokreće igru kad dijete klikne "Kreni!"
 function g3Start(){
-  document.getElementById('g3-sw').style.display='none'; // sakrij Kreni! gumb
-  g3run=true;g3h=0;g3m=0;g3gid=S.gid; // postavi stanje i zabilježi sesiju
-  ac(); // inicijaliziraj AudioContext unaprijed da nema laga pri prvom zvuku
+  document.getElementById('g3-sw').style.display='none';
+  g3run=true;g3h=0;g3m=0;g3gid=S.gid;
+  ac();
   const myGid=g3gid;
   document.getElementById('g3-h').textContent=0;
   document.getElementById('g3-m').textContent=0;
   document.getElementById('g3-arena').innerHTML='';
-  g3dur=S.level==='easy'?30000:45000; // trajanje igre u milisekundama
+  g3dur=60000;
   g3start=performance.now();
-  // animira traku koja se prazni — koristi requestAnimationFrame za glatkoću
   (function tickBar(){
-    if(!g3run||S.gid!==myGid)return; // zaustavi ako sesija nije aktivna
+    if(!g3run||S.gid!==myGid)return;
     const elapsed=performance.now()-g3start;
-    const pct=Math.max(0,1-elapsed/g3dur); // preostali postotak vremena
+    const pct=Math.max(0,1-elapsed/g3dur);
+    const secsLeft=Math.ceil(pct*g3dur/1000);
     document.getElementById('g3-tfill').style.width=(pct*100)+'%';
+    document.getElementById('g3-secs').textContent=secsLeft+'s';
     if(pct>0)requestAnimationFrame(tickBar);
   })();
-  g3iv=setInterval(g3Spawn,S.level==='easy'?900:500); // pokretanje spawna
-  g3to=setTimeout(()=>{if(S.gid===myGid)g3End(false);},g3dur); // kraj kad istekne
+  g3iv=setInterval(g3Spawn,S.level==='easy'?900:500);
+  g3to=setTimeout(()=>{if(S.gid===myGid)g3End();},g3dur);
 }
 
-// Kreira jedan novi oblik i animira mu pad odozgo prema dolje
 function g3Spawn(){
-  if(!g3run||S.gid!==g3gid)return; // ne spawni ako sesija nije aktivna
+  if(!g3run||S.gid!==g3gid)return;
   const arena=document.getElementById('g3-arena');
-  const color=g3PickColor();       // odaberi boju (crvena ili distraktor)
-  const size=48+~~(Math.random()*16); // nasumična veličina (48–63px)
+  const color=g3PickColor();
+  const size=48+~~(Math.random()*16);
   const aw=arena.offsetWidth||300;
-  const x=~~(Math.random()*(aw-size-8))+4; // nasumična horizontalna pozicija
+  const x=~~(Math.random()*(aw-size-8))+4;
   const el=document.createElement('div');
   el.className='fshape';
-  // postavi početnu poziciju izvan vidljivog područja (gore)
   el.style.cssText='left:'+x+'px;top:-'+size+'px;width:'+size+'px;height:'+size+'px;'+color.style+';box-shadow:0 4px 12px rgba(0,0,0,.12);';
-  el.style.borderRadius=Math.random()<0.5?'50%':'14px'; // nasumično krug ili kvadrat
-  // onclick handler — zatvoren nad color i el kako bi zadržao ispravne reference
+  el.style.borderRadius=Math.random()<0.5?'50%':'14px';
   el.onclick=(function(c,elem){return function(){
-    if(!g3run)return; // ignoriraj klik ako igra nije aktivna
-    elem.style.opacity='0';elem.style.pointerEvents='none'; // sakrij odmah
-    setTimeout(()=>{try{elem.remove();}catch(e){}},150); // ukloni iz DOM-a
+    if(!g3run)return;
+    elem.style.opacity='0';elem.style.pointerEvents='none';
+    setTimeout(()=>{try{elem.remove();}catch(e){}},150);
     if(c.isRed){
-      g3h++;document.getElementById('g3-h').textContent=g3h; // povećaj broj pogodaka
+      g3h++;document.getElementById('g3-h').textContent=g3h;
       sndOk();
       const r=elem.getBoundingClientRect();
-      floatStar(r.left+r.width/2,r.top+r.height/2); // zvjezdica na poziciji oblika
-      if(g3h>=G3_TARGET){g3End(true);} // pobjeda ako skupljeno dovoljno crvenih
+      floatStar(r.left+r.width/2,r.top+r.height/2);
     }else{
-      g3m++;document.getElementById('g3-m').textContent=g3m; // povećaj broj promašaja
+      g3m++;document.getElementById('g3-m').textContent=g3m;
       sndNo();
     }
   };})(color,el);
   arena.appendChild(el);
-  // animacija pada — ručna interpolacija pozicije putem requestAnimationFrame
-  const fallDur=3200+Math.random()*800; // trajanje pada (3.2–4 sekunde)
+  const fallDur=3200+Math.random()*800;
   const fallStart=performance.now();
   const ah=arena.offsetHeight||300;
   (function fall(ts){
-    if(!g3run){try{el.remove();}catch(e){}return;} // zaustavi ako igra završila
-    const p=(ts-fallStart)/fallDur;  // napredak pada (0 = vrh, 1 = dno)
-    if(p>=1){try{el.remove();}catch(e){}return;} // ukloni kad dođe do dna
-    el.style.top=(-size+(ah+size)*p)+'px'; // interpolare pozicije
+    if(!g3run){try{el.remove();}catch(e){}return;}
+    const p=(ts-fallStart)/fallDur;
+    if(p>=1){
+      try{el.remove();}catch(e){}
+      if(color.isRed&&g3run){g3m++;document.getElementById('g3-m').textContent=g3m;sndNo();}
+      return;
+    }
+    el.style.top=(-size+(ah+size)*p)+'px';
     requestAnimationFrame(fall);
   })(fallStart);
 }
 
-// Završava igru (won=true = pobjeda, false = isteklo vrijeme)
-function g3End(won){
+function g3End(){
   g3run=false;
-  clearInterval(g3iv);g3iv=null; // zaustavi spawn
-  clearTimeout(g3to);g3to=null;  // zaustavi timeout kraja
-  // ukloni sve oblike koji su još na ekranu
+  clearInterval(g3iv);g3iv=null;
+  clearTimeout(g3to);g3to=null;
   document.getElementById('g3-arena').querySelectorAll('.fshape').forEach(e=>e.remove());
-  document.getElementById('g3-tfill').style.width='0%'; // isprazni traku
+  document.getElementById('g3-tfill').style.width='0%';
   const myGid=g3gid;
-  if(won){sndOk();}else{sndNo();}
-  // prikaži završni ekran (s kratkim odgodom radi zvuka)
-  setTimeout(()=>{if(S.gid!==myGid)return;showFinal(g3h,G3_TARGET);},600);
+  sndOk();
+  setTimeout(()=>{if(S.gid!==myGid)return;showFinalG3(g3h,g3m);},600);
 }
 
-const G4_POOL=[ // svi mogući parovi (slika + početno slovo)
+//IGRA 4: Spoji slovo i sliku
+const G4_POOL=[
   {id:'svg-pas',    l:'P', w:'pas'},
   {id:'svg-macka',  l:'M', w:'mačka'},
   {id:'svg-zec',    l:'Z', w:'zec'},
   {id:'svg-slon',   l:'S', w:'slon'},
   {id:'svg-zirafa', l:'Ž', w:'žirafa'},
   {id:'svg-lav',    l:'L', w:'lav'},
-  {id:'svg-medvjed',l:'M', w:'medvjed'},
   {id:'svg-riba',   l:'R', w:'riba'},
   {id:'svg-jabuka', l:'J', w:'jabuka'},
   {id:'svg-auto',   l:'A', w:'auto'},
   {id:'svg-torta',  l:'T', w:'torta'},
+  {id:'svg-ptica',  l:'P', w:'ptica'},
+  {id:'svg-zaba',   l:'Ž', w:'žaba'},
+  {id:'svg-medvjed',l:'M', w:'medvjed'},
+  {id:'svg-kuca',   l:'K', w:'kuća'},
+  {id:'svg-lopta',  l:'L', w:'lopta'},
+  {id:'svg-olovka', l:'O', w:'olovka'},
+  {id:'svg-sunce',  l:'S', w:'sunce'},
+  {id:'svg-knjiga', l:'K', w:'knjiga'},
 ];
-const G4N=4; // broj rundi
+const G4N=4;
 let g4Rounds=[],g4ri=0,g4ok=0,g4pairs=[],g4matched=0;
+let g4seen=[];
 
-// Gradi runde bez duplikata slova unutar iste runde, pa pokreće igru
 function g4Init(){
-  const pool=shuf([...G4_POOL]);
-  g4Rounds=[];
-  let round=[];
+  if(g4seen.length>=G4_POOL.length-3)g4seen=[];
+  const pool=shuf(G4_POOL.filter(p=>!g4seen.includes(p.id)));
+  g4Rounds=[];let round=[];
   for(let i=0;i<pool.length&&g4Rounds.length<G4N;i++){
     const item=pool[i];
-    if(!round.find(r=>r.l===item.l)){ // ne dodaj ako je slovo već u rundi
+    if(!round.find(r=>r.l===item.l)){
       round.push(item);
-      if(round.length===3){g4Rounds.push(round);round=[];} // runda puna
+      if(round.length===3){g4Rounds.push(round);round=[];}
     }
   }
-  if(round.length>1&&g4Rounds.length<G4N)g4Rounds.push(round); // dodaj nepotpunu rundu
+  if(round.length>1&&g4Rounds.length<G4N)g4Rounds.push(round);
+  g4Rounds.forEach(r=>r.forEach(p=>g4seen.push(p.id)));
   g4ri=0;g4ok=0;show('s-g4');mkDots('g4-prog',G4N,0);g4Round();
   startTi('g4-tdis','g4-bw','g4-b','g4-fw','g4-fb',()=>{sndNo();showFinal(g4ok,g4Rounds.reduce((a,r)=>a+r.length,0));});
 }
 
-// Gradi UI za trenutnu rundu: lijevo slike (povucivi), desno slova (odredišta)
 function g4Round(){
   g4pairs=g4Rounds[g4ri]||[];
   if(!g4pairs.length){showFinal(g4ok,g4Rounds.reduce((a,r)=>a+r.length,0));return;}
   g4matched=0;document.getElementById('g4-next').style.display='none';mkDots('g4-prog',G4N,g4ri);
-  // lijeva kolona — slike koje se povlače (nasumičan redoslijed)
   const imgCol=document.getElementById('g4-imgs');imgCol.innerHTML='';
   const imgItems=shuf([...g4pairs]);
   imgItems.forEach((p,i)=>{
     const d=document.createElement('div');d.className='drag-item';
-    d.style.gridRow=i+1; // postavi red u gridu za poravnanje s desnom stranom
+    d.style.gridRow=i+1;
     d.innerHTML=mkSvg(p.id)+`<span style="font-size:.8rem;font-weight:700;color:var(--purple);margin-top:2px;">${p.w}</span>`;
     d.draggable=true;d.dataset.id=p.id;d.dataset.letter=p.l;
-    d.addEventListener('dragstart',g4DS);       // miš
-    d.addEventListener('touchstart',g4TS,{passive:false}); // dodir
+    d.addEventListener('dragstart',g4DS);
+    d.addEventListener('touchstart',g4TS,{passive:false});
     imgCol.appendChild(d);
   });
-  // desna kolona — slova kao odredišta za povlačenje (nasumičan redoslijed)
   const ltrCol=document.getElementById('g4-ltrs');ltrCol.innerHTML='';
   shuf([...g4pairs]).forEach((p,i)=>{
     const d=document.createElement('div');d.className='drop-zone';
     d.style.gridRow=i+1;
     d.innerHTML=`<span class="dz-label">${p.l}</span>`;
     d.dataset.letter=p.l;d.dataset.matched='false';
-    d.addEventListener('dragover',e=>e.preventDefault()); // dozvoli ispuštanje
+    d.addEventListener('dragover',e=>e.preventDefault());
     d.addEventListener('dragenter',()=>d.classList.add('over'));
     d.addEventListener('dragleave',()=>d.classList.remove('over'));
     d.addEventListener('drop',g4Drop);
@@ -951,66 +904,47 @@ function g4Round(){
   });
 }
 
-let g4Drag=null,g4Ghost=null; // trenutno povlačena stavka i njen vizualni duplikat
-
-// Povlačenje mišem — zabilježi koji element se povlači
+let g4Drag=null,g4Ghost=null;
 function g4DS(e){g4Drag=e.currentTarget;e.currentTarget.classList.add('dragging');}
-
-// Povlačenje dodirom — kreira vizualni duplikat koji prati prst
 function g4TS(e){
   e.preventDefault();g4Drag=e.currentTarget;
   const t=e.touches[0];
-  g4Ghost=g4Drag.cloneNode(true); // kloniraj element kao vizualni vodič
+  g4Ghost=g4Drag.cloneNode(true);
   g4Ghost.style.cssText=`position:fixed;opacity:.7;pointer-events:none;z-index:1000;width:${g4Drag.offsetWidth}px;height:${g4Drag.offsetHeight}px;left:${t.clientX-g4Drag.offsetWidth/2}px;top:${t.clientY-g4Drag.offsetHeight/2}px;border-radius:14px;background:var(--pl);`;
   document.body.appendChild(g4Ghost);
   document.addEventListener('touchmove',g4TM,{passive:false});
   document.addEventListener('touchend',g4TE,{once:true});
 }
-// Pomicanje prsta — ažurira poziciju vizualnog duplikata
 function g4TM(e){e.preventDefault();const t=e.touches[0];if(g4Ghost){g4Ghost.style.left=(t.clientX-g4Ghost.offsetWidth/2)+'px';g4Ghost.style.top=(t.clientY-g4Ghost.offsetHeight/2)+'px';}}
-
-// Kraj dodira — pronađi odredište ispod prsta i provjeri spajanje
 function g4TE(e){
   document.removeEventListener('touchmove',g4TM);
-  if(g4Ghost){g4Ghost.remove();g4Ghost=null;} // ukloni vizualni duplikat
+  if(g4Ghost){g4Ghost.remove();g4Ghost=null;}
   const t=e.changedTouches[0];
   let el=document.elementFromPoint(t.clientX,t.clientY);
-  while(el&&!el.classList.contains('drop-zone'))el=el.parentElement; // traži drop-zone
+  while(el&&!el.classList.contains('drop-zone'))el=el.parentElement;
   if(el)g4Check(el);
   g4Drag=null;
 }
-// Ispuštanje mišem — provjeri spajanje
 function g4Drop(e){e.preventDefault();e.currentTarget.classList.remove('over');if(!g4Drag)return;g4Check(e.currentTarget);if(g4Drag)g4Drag.classList.remove('dragging');g4Drag=null;}
-
-// Provjerava je li slika ispuštena na ispravno slovo
 function g4Check(zone){
-  if(!g4Drag||zone.dataset.matched==='true')return; // ignoriraj već spojene zone
-  const ok=g4Drag.dataset.letter===zone.dataset.letter; // usporedi slova
+  if(!g4Drag||zone.dataset.matched==='true')return;
+  const ok=g4Drag.dataset.letter===zone.dataset.letter;
   if(ok){
     zone.dataset.matched='true';zone.classList.add('matched-ok');
     zone.innerHTML=mkSvg(g4Drag.dataset.id)+`<span class="dz-label">${zone.dataset.letter}</span>`;
-    g4Drag.classList.add('used');g4Drag.draggable=false;
-    g4Drag.removeEventListener('dragstart',g4DS); // onemogući daljnje povlačenje
+    g4Drag.classList.add('used');g4Drag.draggable=false;g4Drag.removeEventListener('dragstart',g4DS);
     const r=zone.getBoundingClientRect();floatStar(r.left+40,r.top+20);sndOk();
     g4matched++;g4ok++;
-    // ako su svi parovi spojeni, prikaži gumb za sljedeću rundu
-    if(g4matched>=g4pairs.length){
-      const _g4gid=S.gid;
-      setTimeout(()=>{if(S.gid===_g4gid)document.getElementById('g4-next').style.display='flex';},500);
-    }
+    if(g4matched>=g4pairs.length){const _g4gid=S.gid;setTimeout(()=>{if(S.gid===_g4gid)document.getElementById('g4-next').style.display='flex';},500);}
   }else{
-    zone.classList.add('matched-no');sndNo(); // crvena animacija za krivo
+    zone.classList.add('matched-no');sndNo();
     setTimeout(()=>zone.classList.remove('matched-no'),500);
   }
 }
-// Prelazak na sljedeću rundu ili završetak igre
-function g4Next(){
-  g4ri++;
-  if(g4ri>=g4Rounds.length){showFinal(g4ok,g4Rounds.reduce((a,r)=>a+r.length,0));return;}
-  show('s-g4');g4Round();
-}
+function g4Next(){g4ri++;if(g4ri>=g4Rounds.length){showFinal(g4ok,g4Rounds.reduce((a,r)=>a+r.length,0));return;}show('s-g4');g4Round();}
 
-const ANIMAL_ITEMS=[ // slike koje su točan odgovor (isA: true)
+//IGRA 5: Klikni sve životinje
+const ANIMAL_ITEMS=[
   {id:'svg-pas',    lbl:'pas',     isA:true},
   {id:'svg-macka',  lbl:'mačka',   isA:true},
   {id:'svg-zec',    lbl:'zec',     isA:true},
@@ -1021,8 +955,16 @@ const ANIMAL_ITEMS=[ // slike koje su točan odgovor (isA: true)
   {id:'svg-riba',   lbl:'riba',    isA:true},
   {id:'svg-ptica',  lbl:'ptica',   isA:true},
   {id:'svg-zaba',   lbl:'žaba',    isA:true},
+  {id:'svg-konj',   lbl:'konj',    isA:true},
+  {id:'svg-krava',  lbl:'krava',   isA:true},
+  {id:'svg-ovca',   lbl:'ovca',    isA:true},
+  {id:'svg-svinja', lbl:'svinja',  isA:true},
+  {id:'svg-pile',   lbl:'pile',    isA:true},
+  {id:'svg-majmun', lbl:'majmun',  isA:true},
+  {id:'svg-pingvin',lbl:'pingvin', isA:true},
+  {id:'svg-hobotnica',lbl:'hobotnica',isA:true},
 ];
-const NON_ANIMAL_ITEMS=[ // distraktori — predmeti koji nisu životinje (isA: false)
+const NON_ANIMAL_ITEMS=[
   {id:'svg-auto',   lbl:'auto',    isA:false},
   {id:'svg-jabuka', lbl:'jabuka',  isA:false},
   {id:'svg-kuca',   lbl:'kuća',    isA:false},
@@ -1031,146 +973,127 @@ const NON_ANIMAL_ITEMS=[ // distraktori — predmeti koji nisu životinje (isA: 
   {id:'svg-olovka', lbl:'olovka',  isA:false},
   {id:'svg-sunce',  lbl:'sunce',   isA:false},
   {id:'svg-knjiga', lbl:'knjiga',  isA:false},
+  {id:'svg-stolica',lbl:'stolica', isA:false},
+  {id:'svg-lampa',  lbl:'lampa',   isA:false},
+  {id:'svg-cipela', lbl:'cipela',  isA:false},
+  {id:'svg-skateboard',lbl:'skateboard',isA:false},
+  {id:'svg-kljuc',  lbl:'ključ',   isA:false},
+  {id:'svg-balon',  lbl:'balon',   isA:false},
+  {id:'svg-sladoled',lbl:'sladoled',isA:false},
+  {id:'svg-bicikl', lbl:'bicikl',  isA:false},
 ];
 
-const G5N=5; // broj rundi
-let g5i=0,g5ok=0,g5total=0,g5clicked=0,g5animalCount=0;
+const G5N=5;
+let g5i=0,g5ok=0,g5total=0,g5clicked=0,g5animalCount=0,g5seenA=[],g5seenN=[];
 
-// Inicijalizira igru i pokreće timer
 function g5Init(){
-  g5i=0;g5ok=0;g5total=0;
+  g5i=0;g5ok=0;g5total=0;g5seenA=[];g5seenN=[];
   show('s-g5');mkDots('g5-prog',G5N,0);g5Round();
   startTi('g5-tdis','g5-bw','g5-b','g5-fw','g5-fb',()=>{sndNo();showFinal(g5ok,g5total||1);});
 }
-// Gradi mrežu slika za trenutnu rundu
 function g5Round(){
   g5clicked=0;
-  document.getElementById('g5-status').textContent='';
-  mkDots('g5-prog',G5N,g5i);
-  const anCnt=S.level==='easy'?3:4; // broj životinja
-  const nonCnt=S.level==='easy'?5:8; // broj predmeta
-  const animals=shuf([...ANIMAL_ITEMS]).slice(0,anCnt);
-  const others=shuf([...NON_ANIMAL_ITEMS]).slice(0,nonCnt);
-  g5animalCount=anCnt;g5total+=anCnt; // dodaj životinje u ukupan broj
-  const all=shuf([...animals,...others]); // pomiješaj sve zajedno
+  document.getElementById('g5-status').textContent='';mkDots('g5-prog',G5N,g5i);
+  const anCnt=S.level==='easy'?3:4;
+  const nonCnt=S.level==='easy'?5:8;
+  if(g5seenA.length+anCnt>ANIMAL_ITEMS.length)g5seenA=[];
+  if(g5seenN.length+nonCnt>NON_ANIMAL_ITEMS.length)g5seenN=[];
+  const animals=shuf(ANIMAL_ITEMS.filter(x=>!g5seenA.includes(x.id))).slice(0,anCnt);
+  const others=shuf(NON_ANIMAL_ITEMS.filter(x=>!g5seenN.includes(x.id))).slice(0,nonCnt);
+  animals.forEach(x=>g5seenA.push(x.id));others.forEach(x=>g5seenN.push(x.id));
+  g5animalCount=anCnt;g5total+=anCnt;
+  const all=shuf([...animals,...others]);
   const grid=document.getElementById('g5-grid');grid.innerHTML='';
   all.forEach(item=>{
     const card=document.createElement('div');card.className='item-card';
     card.innerHTML=mkSvg(item.id)+`<div class="item-lbl">${item.lbl}</div>`;
-    card.onclick=(e)=>g5Click(item,card,e);
-    grid.appendChild(card);
+    card.onclick=(e)=>g5Click(item,card,e);grid.appendChild(card);
   });
 }
-// Obrađuje klik na karticu — točno (životinja) ili netočno (predmet)
 function g5Click(item,card,e){
-  if(card.classList.contains('disabled'))return; // ignoriraj već kliknute
+  if(card.classList.contains('disabled'))return;
   card.classList.add('disabled');card.onclick=null;
   if(item.isA){
-    // točan odgovor — zelena animacija i zvjezdica
     card.classList.add('clicked-ok');floatStar(e.clientX,e.clientY);sndOk();
     g5ok++;g5clicked++;
     document.getElementById('g5-status').textContent='✅ Pronađeno: '+g5clicked+' / '+g5animalCount;
-    if(g5clicked>=g5animalCount){ // sve životinje pronađene — kraj runde
-      const _g5gid=S.gid;
-      setTimeout(()=>{
-        if(S.gid!==_g5gid)return;
-        g5i++;
-        if(g5i>=G5N){showFinal(g5ok,g5total);return;}
-        showFB(true,()=>{show('s-g5');g5Round();});
-      },700);
+    if(g5clicked>=g5animalCount){
+      const _g5gid=S.gid;setTimeout(()=>{if(S.gid!==_g5gid)return;g5i++;if(g5i>=G5N){showFinal(g5ok,g5total);return;}showFB(true,()=>{show('s-g5');g5Round();});},700);
     }
   }else{
-    // netočan odgovor — crvena animacija, ali kartica ostaje dostupna za ponovni klik
     card.classList.add('clicked-no');sndNo();
     setTimeout(()=>{card.classList.remove('clicked-no','disabled');card.onclick=(e2)=>g5Click(item,card,e2);},500);
   }
 }
 
+// Animirana pozadina
 (function(){
   const canvas=document.getElementById('bg-canvas');
   const ctx=canvas.getContext('2d');
   const COLORS=['#FF6B9D','#FFB347','#56CCF2','#A8E6CF','#A87EFF','#F5C518','#FF8C69','#7EC8E3','#FFD1DC','#B8F0D0','#FF9AA2','#C7CEEA'];
   let bubbles=[],animId=null;
-  // prilagodi dimenzije canvasa na veličinu prozora
   function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
-  // kreira jedan mjehurić s nasumičnim svojstvima
   function mkBubble(randomY){
     return{
       x:Math.random()*canvas.width,
-      y:randomY?(Math.random()*canvas.height):(canvas.height+60+Math.random()*200), // randomY=true = razmjesti po cijelom ekranu
-      r:14+Math.random()*38,   // polumjer (14–52px)
+      y:randomY?(Math.random()*canvas.height):(canvas.height+60+Math.random()*200),
+      r:14+Math.random()*38,
       color:COLORS[~~(Math.random()*COLORS.length)],
-      vx:(Math.random()-.5)*.45, // horizontalna brzina (lijevo/desno)
-      vy:-(0.25+Math.random()*0.55), // vertikalna brzina (uvijek prema gore)
-      alpha:0.15+Math.random()*0.22, // prozirnost
-      wobble:Math.random()*Math.PI*2, // početna faza ljuljanja
-      wobbleSpeed:0.008+Math.random()*0.018 // brzina ljuljanja
+      vx:(Math.random()-.5)*.45,
+      vy:-(0.25+Math.random()*0.55),
+      alpha:0.15+Math.random()*0.22,
+      wobble:Math.random()*Math.PI*2,
+      wobbleSpeed:0.008+Math.random()*0.018
     };
   }
-  // inicijalizira sve mjehuriće
   function init(){
     resize();bubbles=[];
-    const n=Math.min(28,Math.floor(canvas.width/55)+6); // broj mjehurića ovisi o širini
+    const n=Math.min(28,Math.floor(canvas.width/55)+6);
     for(let i=0;i<n;i++)bubbles.push(mkBubble(true));
   }
-  // glavni crtački loop — poziva se svakim frameom
   function draw(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     bubbles.forEach(b=>{
-      b.wobble+=b.wobbleSpeed; // ažuriraj fazu ljuljanja
-      b.x+=b.vx+Math.sin(b.wobble)*0.35; // ljuljanje lijevo-desno
-      b.y+=b.vy; // pomak prema gore
-      // ako je izašao van ekrana, resetiraj ga na dno
+      b.wobble+=b.wobbleSpeed;
+      b.x+=b.vx+Math.sin(b.wobble)*0.35;
+      b.y+=b.vy;
       if(b.y<-b.r*2||b.x<-b.r*2||b.x>canvas.width+b.r*2){
         Object.assign(b,mkBubble(false));b.x=Math.random()*canvas.width;
       }
-      ctx.save();
-      ctx.globalAlpha=b.alpha;
+      ctx.save();ctx.globalAlpha=b.alpha;
       ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
       ctx.fillStyle=b.color;ctx.fill();
-      // dodaj sjajni odbljesak (radijalni gradijent)
       const g=ctx.createRadialGradient(b.x-b.r*.32,b.y-b.r*.32,b.r*.04,b.x,b.y,b.r);
       g.addColorStop(0,'rgba(255,255,255,0.55)');g.addColorStop(1,'rgba(255,255,255,0)');
-      ctx.fillStyle=g;ctx.fill();
-      ctx.restore();
+      ctx.fillStyle=g;ctx.fill();ctx.restore();
     });
     animId=requestAnimationFrame(draw);
   }
   function startAnim(){if(!animId)animId=requestAnimationFrame(draw);canvas.style.opacity='1';}
   function stopAnim(){if(animId){cancelAnimationFrame(animId);animId=null;}ctx.clearRect(0,0,canvas.width,canvas.height);canvas.style.opacity='0';}
   window.addEventListener('resize',()=>{resize();});
-  // javna metoda za uključivanje/isključivanje animacije iz sučelja
   window.setBgAnim=function(on){
     document.getElementById('anim-on').classList.toggle('active',on);
     document.getElementById('anim-off').classList.toggle('active',!on);
     const swatches=document.getElementById('color-swatches');
     if(swatches)swatches.style.display=on?'none':'flex';
-    if(on){
-      startAnim();
-      document.body.style.background=''; // vrati animiranu pozadinu
-    }else{
-      stopAnim();
-      setBgColor('#F5F3FF'); // postavi zadanu statičnu boju
-    }
+    if(on){startAnim();document.body.style.background='';}
+    else{stopAnim();setBgColor('#F5F3FF');}
   };
-  init();startAnim(); // pokreni animaciju pri učitavanju stranice
+  init();startAnim();
 })();
 
-// VELIČINA FONTA
+// Veličina fonta
 window.setFs=function(sz){
-  // ukloni sve postojeće klase veličine fonta
   ['sm','md','lg','xl'].forEach(s=>{
     document.documentElement.classList.remove('fs-'+s);
-    const el=document.getElementById('fs-'+s);
-    if(el)el.classList.remove('active');
+    const el=document.getElementById('fs-'+s);if(el)el.classList.remove('active');
   });
-  // dodaj novu klasu i označi aktivni gumb
   document.documentElement.classList.add('fs-'+sz);
-  const el=document.getElementById('fs-'+sz);
-  if(el)el.classList.add('active');
+  const el=document.getElementById('fs-'+sz);if(el)el.classList.add('active');
 };
 
-// STATIČNA BOJA POZADINE
+// Statična boja pozadine
 window.setBgColor=function(color){
   document.body.style.background=color;
   document.querySelectorAll('.swatch').forEach(s=>{
@@ -1178,7 +1101,7 @@ window.setBgColor=function(color){
   });
 };
 
-// Uključuje/isključuje zvuk i ažurira aktivni gumb u sučelju
+// Uključivanje/isključivanje zvuka
 window.setSnd=function(on){
   soundOn=on;
   document.getElementById('snd-on').classList.toggle('active',on);
